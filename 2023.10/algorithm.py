@@ -81,9 +81,50 @@ def insSort(n: List[int]) -> List[int]:
     return result
 
 
+def merSort(n: List[int]) -> List[int]:
+    if len(n) <= 1:
+        return n
+
+    mid = len(n) // 2
+    g1 = merSort(n[:mid])
+    g2 = merSort(n[mid:])
+    result = []
+
+    while g1 and g2:
+        if g1[0] < g2[0]:
+            result.append(g1.pop(0))
+        else:
+            result.append(g2.pop(0))
+
+    while g1:
+        result.append(g1.pop(0))
+
+    while g2:
+        result.append(g2.pop(0))
+
+    return result
+
+
+def qckSort(n: List[int]) -> List[int]:
+    if len(n) <= 1:
+        return n
+
+    pivot = n[-1]
+    g1 = []
+    g2 = []
+
+    for i in range(0, len(n) - 1):
+        if n[i] < pivot:
+            g1.append(n[i])
+        else:
+            g2.append(n[i])
+
+    return qckSort(g1) + [pivot] + qckSort(g2)
+
+
 print(intSum(100))
 
-nums = [13, 45, 78, 65, 8, 73, 83, 23, 47, 3]
+nums = [13, 35, 78, 65, 8, 73, 83, 23, 47, 45]
 print(findMaxInt(nums, len(nums)))
 
 names = ["Tom", "Jerry", "Mike", "Tom", "Mike"]
@@ -95,4 +136,4 @@ print(fibonacci(9))
 hanoi(3, 1, 3, 2)
 
 print(linearSearch(nums, 8))
-print(insSort(nums))
+print(merSort(nums))
